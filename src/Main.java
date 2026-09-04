@@ -4,6 +4,6 @@ public class Main {
     public static void main(String[] args) {
         Car myCar = new Car("VW", "Polo", 2005);
 
-        System.out.println("В сервиза влезе: " + myCar.brand + " " + myCar.model + " от " + myCar.year + "година.");
+        System.out.println("В сервиза влезе: " + myCar.brand + " " + myCar.model + " от " + myCar.year + "г.");
     }
 }
