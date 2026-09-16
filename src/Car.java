@@ -4,21 +4,37 @@ public class Car {
     int year;
     String licensePlate;
     double engineVolume;
-    boolean isManual;
+    Transmission transmission;
     double horsePower;
     boolean hasTurbo;
     boolean hasChip;
 
-    public Car(String brand, String model, int year, String licensePlate, double engineVolume, boolean isManual, double horsePower, boolean hasTurbo, boolean hasChip){
+    public Car(String brand, String model, int year, String licensePlate, double engineVolume, Transmission transmission, double horsePower, boolean hasTurbo, boolean hasChip){
         this.brand = brand;
         this. model = model;
         this.year = year;
         this.licensePlate = licensePlate;
         this.engineVolume = engineVolume;
-        this.isManual = isManual;
+        this.transmission = transmission;
         this.horsePower = horsePower;
         this.hasTurbo = hasTurbo;
         this.hasChip = hasChip;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public String getLicensePlate() {
+        return licensePlate;
     }
 
     public void addTurbo(){
@@ -92,7 +108,21 @@ public class Car {
         }
     }
 
-    public void printDiagnostics(){
-        System.out.println("В сервиза влезе: " + brand + " " + model + " от " + year + "г., рег. номер " + licensePlate + " с " + engineVolume + " двигател(" + horsePower + "к.с.) и ръчна скоростна кутия: " + isManual + ", има турбо: " + hasTurbo + " и е чипосан: " + hasChip + ".");
+    public void printCarInfo(){
+        System.out.println(brand + ", " + model + ", " + year + "г. рег. номер: " + licensePlate +".");
+    }
+    public void printDiagnostics(Client client){
+        System.out.println("------ Инфо ------");
+        System.out.println("Марка: " + brand);
+        System.out.println("Модел:  " + model);
+        System.out.println("Година:  " + year);
+        System.out.println("Рег. номер:  " + licensePlate);
+        System.out.println("Двигател:  " + engineVolume);
+        System.out.println("Скоростна кутия:  " + transmission);
+        System.out.println("Мощност:  " + horsePower + "конски сили");
+        System.out.println("Турбо:  " + hasTurbo);
+        System.out.println("Чип:  " + hasChip);
+        System.out.println("Собственик:  " + client.getFullName());
+        System.out.println("------------------");
     }
 }

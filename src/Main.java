@@ -2,33 +2,10 @@
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        Car myCar = new Car("VW", "Polo", 2005, "B2362HB", 1.4, true, 55, false, false);
-        myCar.printDiagnostics();
-        myCar.addTurbo();
-        myCar.printDiagnostics();
-        myCar.addTurbo();
-        myCar.printDiagnostics();
-        myCar.removeTurbo();
-        myCar.printDiagnostics();
-        myCar.removeTurbo();
-        myCar.printDiagnostics();
-        myCar.addChip();
-        myCar.printDiagnostics();
-        myCar.addChip();
-        myCar.printDiagnostics();
-        myCar.addTurbo();
-        myCar.printDiagnostics();
-        myCar.removeTurbo();
-        myCar.printDiagnostics();
-        myCar.addTurbo();
-        myCar.removeChip();
-        myCar.printDiagnostics();
-        myCar.removeChip();
-        myCar.printDiagnostics();
-        myCar.addChip();
-        myCar.removeTurbo();
-        myCar.printDiagnostics();
-        myCar.removeChip();
-        myCar.printDiagnostics();
+        Client myClient = new Client("Teodor Ivanov", "0893873917", "t_ivanov@mail.com", "Varna");
+        Car myCar = new Car("VW", "Polo", 2005, "B2362HB", 1.4, Transmission.MANUAL, 55, false, false);
+        myClient.addCar(myCar);
+        myClient.printClientInfo();
+        myCar.printDiagnostics(myClient);
     }
 }
