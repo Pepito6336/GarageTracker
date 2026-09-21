@@ -3,13 +3,15 @@ import java.util.List;
 
 public class Client {
     String fullName;
+    String egn;
     String phoneNumber;
     String eMail;
     String address;
     List<Car> ownedCars;
 
-    public Client(String fullName, String phoneNumber, String eMail, String address) {
+    public Client(String fullName, String egn, String phoneNumber, String eMail, String address) {
         this.fullName = fullName;
+        this.egn = egn;
         this.phoneNumber = phoneNumber;
         this.eMail = eMail;
         this.address = address;
@@ -18,6 +20,10 @@ public class Client {
 
     public String getFullName() {
         return fullName;
+    }
+
+    public String getEgn() {
+        return egn;
     }
 
     public void addCar(Car car){
