@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class GarageManager {
     // Главният склад вече живее тук, а не в Main
-    private List<Client> garageClients;
+    private final List<Client> garageClients;
 
     public GarageManager() {
         this.garageClients = new ArrayList<>();
