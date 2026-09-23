@@ -49,6 +49,10 @@ public class Client {
         System.out.println("Колата на " + fullName + " е добавена в списъка.");
     }
 
+    public void printClientBasics(){
+        System.out.println(fullName + ", егн: " + egn + ", притежавани коли: " + ownedCars.size() + "бр.");
+    }
+
     public void printClientInfo(){
         System.out.println("------ Инфо ------");
         System.out.println("Клиент: " + fullName);

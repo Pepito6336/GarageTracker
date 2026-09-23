@@ -103,7 +103,7 @@ public class Car {
     }
 
     public void printCarInfo() {
-        System.out.println(brand + ", " + model + ", " + year + "г. рег. номер: " + licensePlate + ".");
+        System.out.println(brand + ", " + model + ", рег. номер: " + licensePlate + ", Собственик:" + getOwner().getFullName());
     }
 
     public void printDiagnostics(Client client) {

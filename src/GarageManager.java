@@ -95,11 +95,7 @@ public class GarageManager {
         }
 
         for (Client c : sortedClients) {
-            System.out.println("Име: " + c.getFullName() +
-                    " | ЕГН: " + c.getEgn() +
-                    " | Телефон: " + c.getPhoneNumber() +
-                    " | Имейл: " + c.geteMail() +
-                    " | Автомобили: " + c.getOwnedCars().size() + " бр.");
+            c.printClientBasics();
         }
     }
 
@@ -147,10 +143,7 @@ public class GarageManager {
         }
 
         for (Car car : allCars) {
-            System.out.println("Марка: " + car.getBrand() +
-                    " | Модел: " + car.getModel() +
-                    " | Рег. номер: " + car.getLicensePlate() +
-                    " | Собственик: " + car.getOwner().getFullName());
+            car.printCarInfo();
         }
     }
 
