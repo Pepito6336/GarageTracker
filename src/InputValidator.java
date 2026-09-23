@@ -87,10 +87,13 @@ public class InputValidator {
     public static String readLicensePlate(Scanner scanner, String prompt) {
         while (true) {
             System.out.print(prompt);
-            String input = scanner.nextLine().trim();
-            if (!input.isEmpty() && input.length() <= 7 && !input.contains(" ")) {
-                return input.toUpperCase();
+
+            String input = scanner.nextLine().replaceAll("\\s+", "").toUpperCase();
+
+            if (!input.isEmpty() && input.length() <= 8) {
+                return input;
             }
+
             System.out.println("Невалиден номер.");
         }
     }
