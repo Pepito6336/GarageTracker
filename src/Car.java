@@ -2,14 +2,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Car {
-    String brand;
-    String model;
-    int year;
-    String licensePlate;
-    double engineVolume;
-    Transmission transmission;
-    double horsePower;
-    List<IUpgrade> installedUpgrades;
+    private String brand;
+    private String model;
+    private int year;
+    private String licensePlate;
+    private double engineVolume;
+    private Transmission transmission;
+    private double horsePower;
+    private List<IUpgrade> installedUpgrades;
+    private Client owner;
 
     public Car(String brand, String model, int year, String licensePlate, double engineVolume, Transmission transmission, double horsePower) {
         this.brand = brand;
@@ -22,12 +23,49 @@ public class Car {
         this.installedUpgrades = new ArrayList<>();
     }
 
+    public String getBrand() {
+        return brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public String getLicensePlate() {
+        return licensePlate;
+    }
+
+    public double getEngineVolume() {
+        return engineVolume;
+    }
+
+    public Transmission getTransmission() {
+        return transmission;
+    }
+
     public double getHorsePower() {
         return horsePower;
     }
 
+    public List<IUpgrade> getInstalledUpgrades() {
+        return installedUpgrades;
+    }
+
+    public Client getOwner() {
+        return owner;
+    }
+
     public void setHorsePower(double horsePower) {
+
         this.horsePower = horsePower;
+    }
+
+    public void setOwner(Client owner) {
+        this.owner = owner;
     }
 
     public boolean hasUpgrade(String modName) {

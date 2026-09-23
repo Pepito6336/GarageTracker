@@ -3,7 +3,6 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        // Палим главния двигател на гаража
         GarageManager manager = new GarageManager();
 
         System.out.println("=== GarageTracker v2.0 ===");
@@ -12,9 +11,11 @@ public class Main {
             System.out.println("\n--- ГЛАВНО МЕНЮ ---");
             System.out.println("1. Добавяне на нов клиент");
             System.out.println("2. Добавяне на автомобил");
-            System.out.println("3. Инсталиране на модификация (Турбо/Чип)");
-            System.out.println("4. Премахване на модификация (Турбо/Чип)");
-            System.out.println("5. Изход");
+            System.out.println("3. Списък на клиенти");
+            System.out.println("4. Списък на автомобили");
+            System.out.println("5. Инсталиране на модификация (Турбо/Чип)");
+            System.out.println("6. Премахване на модификация (Турбо/Чип)");
+            System.out.println("7. Изход");
 
             String choice = InputValidator.readStringLimited(scanner, "Изберете опция: ", 1);
 
@@ -36,14 +37,22 @@ public class Main {
                     break;
 
                 case "3":
-                    manager.installModification(scanner);
+                    manager.printAllClients();
                     break;
 
                 case "4":
-                    manager.removeModification(scanner);
+                    manager.printAllCars();
                     break;
 
                 case "5":
+                    manager.installModification(scanner);
+                    break;
+
+                case "6":
+                    manager.removeModification(scanner);
+                    break;
+
+                case "7":
                     System.out.println("Изход . . .");
                     scanner.close();
                     return;

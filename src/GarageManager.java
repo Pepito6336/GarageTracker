@@ -3,7 +3,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class GarageManager {
-    // Главният склад вече живее тук, а не в Main
     private final List<Client> garageClients;
 
     public GarageManager() {
@@ -55,8 +54,8 @@ public class GarageManager {
         System.out.println("Намерен клиент: " + foundClient.getFullName());
         String plate = InputValidator.readLicensePlate(scanner, "Въведете Регистрационен номер: ");
 
-        for (Car car : foundClient.ownedCars) {
-            if (car.licensePlate.equals(plate)) {
+        for (Car car : foundClient.getOwnedCars()) {
+            if (car.getLicensePlate().equals(plate)) {
                 throw new DuplicateException("Тази кола вече е регистрирана към клиента.");
             }
         }
@@ -73,6 +72,88 @@ public class GarageManager {
         System.out.println("Колата е добавена.");
     }
 
+    public void printAllClients() {
+        System.out.println("\n--- СПИСЪК С КЛИЕНТИ ---");
+        if (garageClients.isEmpty()) {
+            System.out.println("Няма регистрирани клиенти.");
+            return;
+        }
+
+        List<Client> sortedClients = new ArrayList<>(garageClients);
+
+        for (int i = 0; i < sortedClients.size() - 1; i++) {
+            for (int j = 0; j < sortedClients.size() - i - 1; j++) {
+
+                Client client1 = sortedClients.get(j);
+                Client client2 = sortedClients.get(j + 1);
+
+                if (client1.getFullName().compareToIgnoreCase(client2.getFullName()) > 0) {
+                    sortedClients.set(j, client2);
+                    sortedClients.set(j + 1, client1);
+                }
+            }
+        }
+
+        for (Client c : sortedClients) {
+            System.out.println("Име: " + c.getFullName() +
+                    " | ЕГН: " + c.getEgn() +
+                    " | Телефон: " + c.getPhoneNumber() +
+                    " | Имейл: " + c.geteMail() +
+                    " | Автомобили: " + c.getOwnedCars().size() + " бр.");
+        }
+    }
+
+    public void printAllCars() {
+        System.out.println("\n--- СПИСЪК С АВТОМОБИЛИ ---");
+
+        List<Car> allCars = new ArrayList<>();
+        for (Client c : garageClients) {
+            allCars.addAll(c.getOwnedCars());
+        }
+
+        if (allCars.isEmpty()) {
+            System.out.println("Няма регистрирани автомобили в системата.");
+            return;
+        }
+
+        for (int i = 0; i < allCars.size() - 1; i++) {
+            for (int j = 0; j < allCars.size() - i - 1; j++) {
+
+                Car car1 = allCars.get(j);
+                Car car2 = allCars.get(j + 1);
+                boolean shouldSwap = false;
+
+                int brandCheck = car1.getBrand().compareToIgnoreCase(car2.getBrand());
+                if (brandCheck > 0) {
+                    shouldSwap = true;
+                }
+                else if (brandCheck == 0) {
+                    int modelCheck = car1.getModel().compareToIgnoreCase(car2.getModel());
+                    if (modelCheck > 0) {
+                        shouldSwap = true;
+                    }
+                    else if (modelCheck == 0) {
+                        if (car1.getYear() > car2.getYear()) {
+                            shouldSwap = true;
+                        }
+                    }
+                }
+
+                if (shouldSwap) {
+                    allCars.set(j, car2);
+                    allCars.set(j + 1, car1);
+                }
+            }
+        }
+
+        for (Car car : allCars) {
+            System.out.println("Марка: " + car.getBrand() +
+                    " | Модел: " + car.getModel() +
+                    " | Рег. номер: " + car.getLicensePlate() +
+                    " | Собственик: " + car.getOwner().getFullName());
+        }
+    }
+
     public void installModification(Scanner scanner) {
         System.out.println("\n--- ИНСТАЛИРАНЕ НА МОДИФИКАЦИЯ ---");
         String plate = InputValidator.readLicensePlate(scanner, "На коя кола ще инсталирате? (Рег. номер): ");
@@ -81,8 +162,8 @@ public class GarageManager {
         Client targetClient = null;
 
         for (Client c : garageClients) {
-            for (Car car : c.ownedCars) {
-                if (car.licensePlate.equals(plate)) {
+            for (Car car : c.getOwnedCars()) {
+                if (car.getLicensePlate().equals(plate)) {
                     targetCar = car;
                     targetClient = c;
                     break;
@@ -120,8 +201,8 @@ public class GarageManager {
         Client targetClient = null;
 
         for (Client c : garageClients) {
-            for (Car car : c.ownedCars) {
-                if (car.licensePlate.equals(plate)) {
+            for (Car car : c.getOwnedCars()) {
+                if (car.getLicensePlate().equals(plate)) {
                     targetCar = car;
                     targetClient = c;
                     break;
