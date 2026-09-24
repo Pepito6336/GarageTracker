@@ -72,6 +72,72 @@ public class GarageManager {
         System.out.println("Колата е добавена.");
     }
 
+    public void removeClient(Scanner scanner) {
+        System.out.println("\n--- ИЗТРИВАНЕ НА КЛИЕНТ ---");
+        if (garageClients.isEmpty()) {
+            System.out.println("Гаражът е празен. Няма клиенти за изтриване.");
+            return;
+        }
+
+        String searchEgn = InputValidator.readEgn(scanner);
+
+        Client targetClient = null;
+        for (Client c : garageClients) {
+            if (c.getEgn().equals(searchEgn)) {
+                targetClient = c;
+                break;
+            }
+        }
+
+        if (targetClient == null) {
+            System.out.println("Няма клиент с такова ЕГН.");
+            return;
+        }
+
+        boolean confirm = InputValidator.readConfirmation(scanner, "Изтриването на клиента ще изтрие и колите, които той притежава от системата. Искате ли да продължите?");
+
+        if (confirm) {
+            garageClients.remove(targetClient);
+            System.out.println("Клиентът и всичките му автомобили бяха изтрити.");
+        } else {
+            System.out.println("Операцията е прекратена.");
+        }
+    }
+
+    public void removeCar(Scanner scanner) {
+        System.out.println("\n--- ИЗТРИВАНЕ НА АВТОМОБИЛ ---");
+
+        String plate = InputValidator.readLicensePlate(scanner, "Въведете Рег. номер на колата за изтриване: ");
+
+        Car targetCar = null;
+        Client targetClient = null;
+
+        for (Client c : garageClients) {
+            for (Car car : c.getOwnedCars()) {
+                if (car.getLicensePlate().equals(plate)) {
+                    targetCar = car;
+                    targetClient = c;
+                    break;
+                }
+            }
+            if (targetCar != null) break;
+        }
+
+        if (targetCar == null) {
+            System.out.println("Кола с такъв регистрационен номер не е открита.");
+            return;
+        }
+
+        boolean confirm = InputValidator.readConfirmation(scanner, "Искате ли да изтриете колата?");
+
+        if (confirm) {
+            targetClient.getOwnedCars().remove(targetCar);
+            System.out.println("Колата беше изтрита успешно.");
+        } else {
+            System.out.println("Операцията е прекратена.");
+        }
+    }
+
     public void printAllClients() {
         System.out.println("\n--- СПИСЪК С КЛИЕНТИ ---");
         if (garageClients.isEmpty()) {
