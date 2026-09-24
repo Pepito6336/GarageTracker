@@ -17,11 +17,11 @@ public class Main {
             System.out.println("6. Пълна информация за кола");
             System.out.println("7. Списък на всички клиенти");
             System.out.println("8. Списък на всички автомобили");
-            System.out.println("9. Инсталиране на модификация (Турбо/Чип)");
-            System.out.println("10. Премахване на модификация (Турбо/Чип)");
-            System.out.println("11. Изход");
+            System.out.println("9. Търсене на Клиенти и Автомобили)");
+            System.out.println("10. Инсталиране на модификация (Турбо/Чип)");
+            System.out.println("11. Премахване на модификация (Турбо/Чип)");
+            System.out.println("12. Изход");
 
-            // Вече ползваме лимит от 2 символа, защото имаме двуцифрени опции (10 и 11)
             String choice = InputValidator.readStringLimited(scanner, "Изберете опция: ", 2);
 
             switch (choice) {
@@ -32,7 +32,6 @@ public class Main {
                         System.out.println(e.getMessage());
                     }
                     break;
-
                 case "2":
                     try {
                         manager.registerCar(scanner);
@@ -40,44 +39,37 @@ public class Main {
                         System.out.println(e.getMessage());
                     }
                     break;
-
                 case "3":
                     manager.removeClient(scanner);
                     break;
-
                 case "4":
                     manager.removeCar(scanner);
                     break;
-
                 case "5":
                     manager.printClientDetails(scanner);
                     break;
-
                 case "6":
                     manager.printCarDetails(scanner);
                     break;
-
                 case "7":
                     manager.printAllClients();
                     break;
-
                 case "8":
                     manager.printAllCars();
                     break;
-
                 case "9":
+                    manager.search(scanner);
+                    break;
+                case "10":
                     manager.installModification(scanner);
                     break;
-
-                case "10":
+                case "11":
                     manager.removeModification(scanner);
                     break;
-
-                case "11":
+                case "12":
                     System.out.println("Изход . . .");
                     scanner.close();
                     return;
-
                 default:
                     System.out.println("Невалидна опция.");
             }

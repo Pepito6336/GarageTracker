@@ -56,7 +56,7 @@ public class Client {
     public void printClientInfo(){
         System.out.println("------ Инфо ------");
         System.out.println("Клиент: " + fullName);
-        System.out.println("Tелефон: " + phoneNumber);
+        System.out.println("Телефон: " + phoneNumber);
         System.out.println("И-Мейл: " + eMail);
         System.out.println("Адрес: " + address);
         System.out.println("Притежавани коли: ");
