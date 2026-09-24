@@ -1,5 +1,8 @@
 package bg.tu.garage.entities;
 
+import bg.tu.garage.exceptions.UpgradeException;
+import bg.tu.garage.upgrades.IUpgrade;
+
 import java.util.ArrayList;
 import java.util.List;
 

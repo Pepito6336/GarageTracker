@@ -1,6 +1,21 @@
 package bg.tu.garage;
 
 import bg.tu.garage.exceptions.DuplicateException;
+import bg.tu.garage.managers.car.CarManager;
+import bg.tu.garage.managers.car.ICarManager;
+import bg.tu.garage.managers.client.ClientManager;
+import bg.tu.garage.managers.client.IClientManager;
+import bg.tu.garage.managers.report.IReportManager;
+import bg.tu.garage.managers.report.ReportManager;
+import bg.tu.garage.managers.search.ISearchEngine;
+import bg.tu.garage.managers.search.SearchEngine;
+import bg.tu.garage.managers.system.ISystemManager;
+import bg.tu.garage.managers.system.SystemManager;
+import bg.tu.garage.managers.upgrade.IUpgradeManager;
+import bg.tu.garage.managers.upgrade.UpgradeManager;
+import bg.tu.garage.storage.FileManager;
+import bg.tu.garage.storage.GarageDatabase;
+import bg.tu.garage.utils.InputValidator;
 
 import java.util.Scanner;
 
