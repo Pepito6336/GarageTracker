@@ -1,11 +1,13 @@
+package bg.tu.garage.entities;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Car {
-    private String brand;
-    private String model;
-    private int year;
-    private String licensePlate;
+    private final String brand;
+    private final String model;
+    private final int year;
+    private final String licensePlate;
     private double engineVolume;
     private Transmission transmission;
     private double horsePower;
@@ -23,56 +25,22 @@ public class Car {
         this.installedUpgrades = new ArrayList<>();
     }
 
-    public String getBrand() {
-        return brand;
-    }
+    public String getBrand() { return brand; }
+    public String getModel() { return model; }
+    public int getYear() { return year; }
+    public String getLicensePlate() { return licensePlate; }
+    public double getEngineVolume() { return engineVolume; }
+    public Transmission getTransmission() { return transmission; }
+    public double getHorsePower() { return horsePower; }
+    public List<IUpgrade> getInstalledUpgrades() { return installedUpgrades; }
+    public Client getOwner() { return owner; }
 
-    public String getModel() {
-        return model;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public String getLicensePlate() {
-        return licensePlate;
-    }
-
-    public double getEngineVolume() {
-        return engineVolume;
-    }
-
-    public Transmission getTransmission() {
-        return transmission;
-    }
-
-    public double getHorsePower() {
-        return horsePower;
-    }
-
-    public List<IUpgrade> getInstalledUpgrades() {
-        return installedUpgrades;
-    }
-
-    public Client getOwner() {
-        return owner;
-    }
-
-    public void setHorsePower(double horsePower) {
-
-        this.horsePower = horsePower;
-    }
-
-    public void setOwner(Client owner) {
-        this.owner = owner;
-    }
+    public void setHorsePower(double horsePower) { this.horsePower = horsePower; }
+    public void setOwner(Client owner) { this.owner = owner; }
 
     public boolean hasUpgrade(String modName) {
         for (IUpgrade upgrade : installedUpgrades) {
-            if (upgrade.getModName().equals(modName)) {
-                return true;
-            }
+            if (upgrade.getModName().equals(modName)) return true;
         }
         return false;
     }
@@ -94,7 +62,7 @@ public class Car {
             }
         }
         if (targetUpgrade == null) {
-            throw new UpgradeException("Модификация '" + modName + "' не е открита на този автомобил.");
+            throw new UpgradeException("Модификация '" + modName + "' не е открита.");
         }
         targetUpgrade.remove(this);
         installedUpgrades.remove(targetUpgrade);
@@ -115,8 +83,7 @@ public class Car {
         System.out.println("Мощност: " + horsePower + " конски сили");
         if (installedUpgrades.isEmpty()) {
             System.out.println("Няма модификации.");
-        }
-        else {
+        } else {
             System.out.println("Модификации:");
             for (IUpgrade upgrade : installedUpgrades) {
                 System.out.println("- " + upgrade.getModName());
@@ -125,4 +92,4 @@ public class Car {
         System.out.println("Собственик: " + client.getFullName());
         System.out.println("------------------");
     }
-} 
+}

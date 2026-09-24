@@ -1,3 +1,5 @@
+package bg.tu.garage.upgrades;
+
 public abstract class CarMod implements IUpgrade {
     protected String modName;
     protected boolean isPreInstalled;
@@ -19,4 +21,4 @@ public abstract class CarMod implements IUpgrade {
     protected void printRemoved() {
         System.out.println(modName + " е премахнато успешно.");
     }
-} 
+}

@@ -1,3 +1,8 @@
+package bg.tu.garage.upgrades.types;
+
+import bg.tu.garage.entities.Car;
+import bg.tu.garage.upgrades.CarMod;
+
 public class Chip extends CarMod {
 
     public Chip(boolean isPreInstalled) {
@@ -37,4 +42,4 @@ public class Chip extends CarMod {
         }
         printRemoved();
     }
-} 
+}

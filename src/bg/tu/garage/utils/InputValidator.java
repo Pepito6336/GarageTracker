@@ -1,3 +1,7 @@
+package bg.tu.garage.utils;
+
+import bg.tu.garage.entities.Transmission;
+
 import java.util.Scanner;
 
 public class InputValidator {

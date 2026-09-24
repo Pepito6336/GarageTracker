@@ -1,9 +1,11 @@
+package bg.tu.garage.entities;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Client {
     private String fullName;
-    private String egn;
+    private final String egn; // Вече никой не може да го промени по погрешка
     private String phoneNumber;
     private String eMail;
     private String address;
@@ -18,30 +20,12 @@ public class Client {
         this.ownedCars = new ArrayList<>();
     }
 
-    public String getFullName() {
-
-        return fullName;
-    }
-
-    public String getEgn() {
-        return egn;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public String geteMail() {
-        return eMail;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public List<Car> getOwnedCars() {
-        return ownedCars;
-    }
+    public String getFullName() { return fullName; }
+    public String getEgn() { return egn; }
+    public String getPhoneNumber() { return phoneNumber; }
+    public String geteMail() { return eMail; }
+    public String getAddress() { return address; }
+    public List<Car> getOwnedCars() { return ownedCars; }
 
     public void addCar(Car car) {
         car.setOwner(this);
@@ -65,4 +49,4 @@ public class Client {
         }
         System.out.println("------------------");
     }
-} 
+}

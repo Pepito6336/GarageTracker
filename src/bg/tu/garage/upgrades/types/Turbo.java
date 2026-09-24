@@ -1,3 +1,8 @@
+package bg.tu.garage.upgrades.types;
+
+import bg.tu.garage.entities.Car;
+import bg.tu.garage.upgrades.CarMod;
+
 public class Turbo extends CarMod {
 
     public Turbo(boolean isPreInstalled) {
@@ -42,4 +47,4 @@ public class Turbo extends CarMod {
         }
         printRemoved();
     }
-} 
+}

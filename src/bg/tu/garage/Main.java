@@ -1,11 +1,26 @@
+package bg.tu.garage;
+
+import bg.tu.garage.exceptions.DuplicateException;
+
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        GarageManager manager = new GarageManager();
+
+        GarageDatabase db = new GarageDatabase(FileManager.loadData());
+
+        IClientManager clientManager = new ClientManager(db);
+        ICarManager carManager = new CarManager(db);
+        IReportManager reportManager = new ReportManager(db);
+        ISearchEngine searchEngine = new SearchEngine(db);
+        IUpgradeManager upgradeManager = new UpgradeManager(db);
+        ISystemManager systemManager = new SystemManager(db); // Новият шеф на системата
 
         System.out.println("=== GarageTracker ===");
+        if (!db.getClients().isEmpty()) {
+            System.out.println("Успешно зареден гараж с " + db.getClients().size() + " клиенти.");
+        }
 
         while (true) {
             System.out.println("\n--- ГЛАВНО МЕНЮ ---");
@@ -28,65 +43,50 @@ public class Main {
 
             switch (choice) {
                 case "1":
-                    try {
-                        manager.registerClient(scanner);
-                    } catch (DuplicateException e) {
-                        System.out.println(e.getMessage());
-                    }
+                    try { clientManager.registerClient(scanner); }
+                    catch (DuplicateException e) { System.out.println(e.getMessage()); }
                     break;
                 case "2":
-                    try {
-                        manager.registerCar(scanner);
-                    } catch (DuplicateException e) {
-                        System.out.println(e.getMessage());
-                    }
+                    try { carManager.registerCar(scanner); }
+                    catch (DuplicateException e) { System.out.println(e.getMessage()); }
                     break;
                 case "3":
-                    manager.removeClient(scanner);
+                    clientManager.removeClient(scanner);
                     break;
                 case "4":
-                    manager.removeCar(scanner);
+                    carManager.removeCar(scanner);
                     break;
                 case "5":
-                    manager.printClientDetails(scanner);
+                    clientManager.printClientDetails(scanner);
                     break;
                 case "6":
-                    manager.printCarDetails(scanner);
+                    carManager.printCarDetails(scanner);
                     break;
                 case "7":
-                    manager.printAllClients();
+                    reportManager.printAllClients();
                     break;
                 case "8":
-                    manager.printAllCars();
+                    reportManager.printAllCars();
                     break;
                 case "9":
-                    manager.search(scanner);
+                    searchEngine.search(scanner);
                     break;
                 case "10":
-                    manager.installModification(scanner);
+                    upgradeManager.installModification(scanner);
                     break;
                 case "11":
-                    manager.removeModification(scanner);
+                    upgradeManager.removeModification(scanner);
                     break;
                 case "12":
-                    FileManager.saveData(manager.getGarageClients());
+                    systemManager.saveChanges();
                     break;
                 case "13":
-                    // Вече методът сам си пита, трие и запазва, ако е нужно
-                    manager.clearAllData(scanner);
+                    systemManager.clearAllData(scanner);
                     break;
-
                 case "14":
-                    boolean saveBeforeExit = InputValidator.readConfirmation(scanner, "Искате ли да запазите промените преди изход?");
-
-                    if (saveBeforeExit) {
-                        FileManager.saveData(manager.getGarageClients());
-                    }
-
-                    System.out.println("Изход . . .");
+                    systemManager.exitProgram(scanner);
                     scanner.close();
                     return;
-
                 default:
                     System.out.println("Невалидна опция.");
             }
