@@ -138,6 +138,48 @@ public class GarageManager {
         }
     }
 
+    public void printClientDetails(Scanner scanner) {
+        System.out.println("\n--- ПЪЛНА ИНФОРМАЦИЯ ЗА КЛИЕНТ ---");
+        if (garageClients.isEmpty()) {
+            System.out.println("Гаражът е празен. Няма клиенти в системата.");
+            return;
+        }
+
+        String searchEgn = InputValidator.readEgn(scanner);
+
+        for (Client c : garageClients) {
+            if (c.getEgn().equals(searchEgn)) {
+                // Обектът сам си знае как да си изпринтира данните и колите
+                c.printClientInfo();
+                return;
+            }
+        }
+
+        System.out.println("Няма клиент с такова ЕГН.");
+    }
+
+    public void printCarDetails(Scanner scanner) {
+        System.out.println("\n--- ПЪЛНА ИНФОРМАЦИЯ ЗА КОЛА ---");
+        if (garageClients.isEmpty()) {
+            System.out.println("Гаражът е празен.");
+            return;
+        }
+
+        String plate = InputValidator.readLicensePlate(scanner, "Въведете Рег. номер за търсене: ");
+
+        for (Client c : garageClients) {
+            for (Car car : c.getOwnedCars()) {
+                if (car.getLicensePlate().equals(plate)) {
+                    // Колата изкарва пълната си диагностика, като ѝ подаваме собственика
+                    car.printDiagnostics(c);
+                    return;
+                }
+            }
+        }
+
+        System.out.println("Кола с такъв регистрационен номер не е открита.");
+    }
+
     public void printAllClients() {
         System.out.println("\n--- СПИСЪК С КЛИЕНТИ ---");
         if (garageClients.isEmpty()) {

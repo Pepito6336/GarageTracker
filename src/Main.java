@@ -5,7 +5,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         GarageManager manager = new GarageManager();
 
-        System.out.println("=== GarageTracker v2.0 ===");
+        System.out.println("=== GarageTracker ===");
 
         while (true) {
             System.out.println("\n--- ГЛАВНО МЕНЮ ---");
@@ -13,13 +13,16 @@ public class Main {
             System.out.println("2. Добавяне на автомобил");
             System.out.println("3. Премахване на клиент");
             System.out.println("4. Премахване на автомобил");
-            System.out.println("5. Списък на клиенти");
-            System.out.println("6. Списък на автомобили");
-            System.out.println("7. Инсталиране на модификация (Турбо/Чип)");
-            System.out.println("8. Премахване на модификация (Турбо/Чип)");
-            System.out.println("9. Изход");
+            System.out.println("5. Пълна информация за клиент");
+            System.out.println("6. Пълна информация за кола");
+            System.out.println("7. Списък на всички клиенти");
+            System.out.println("8. Списък на всички автомобили");
+            System.out.println("9. Инсталиране на модификация (Турбо/Чип)");
+            System.out.println("10. Премахване на модификация (Турбо/Чип)");
+            System.out.println("11. Изход");
 
-            String choice = InputValidator.readStringLimited(scanner, "Изберете опция: ", 1);
+            // Вече ползваме лимит от 2 символа, защото имаме двуцифрени опции (10 и 11)
+            String choice = InputValidator.readStringLimited(scanner, "Изберете опция: ", 2);
 
             switch (choice) {
                 case "1":
@@ -47,22 +50,30 @@ public class Main {
                     break;
 
                 case "5":
-                    manager.printAllClients();
+                    manager.printClientDetails(scanner);
                     break;
 
                 case "6":
-                    manager.printAllCars();
+                    manager.printCarDetails(scanner);
                     break;
 
                 case "7":
-                    manager.installModification(scanner);
+                    manager.printAllClients();
                     break;
 
                 case "8":
-                    manager.removeModification(scanner);
+                    manager.printAllCars();
                     break;
 
                 case "9":
+                    manager.installModification(scanner);
+                    break;
+
+                case "10":
+                    manager.removeModification(scanner);
+                    break;
+
+                case "11":
                     System.out.println("Изход . . .");
                     scanner.close();
                     return;
