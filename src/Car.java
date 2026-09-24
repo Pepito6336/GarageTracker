@@ -77,16 +77,15 @@ public class Car {
         return false;
     }
 
-    public void applyUpgrade(IUpgrade upgrade) {
+    public void applyUpgrade(IUpgrade upgrade) throws UpgradeException {
         if (hasUpgrade(upgrade.getModName())) {
-            System.out.println("Колата вече има " + upgrade.getModName() + "!");
-            return;
+            throw new UpgradeException("Колата вече разполага с модификация '" + upgrade.getModName() + "'.");
         }
         upgrade.install(this);
         installedUpgrades.add(upgrade);
     }
 
-    public void removeUpgrade(String modName) {
+    public void removeUpgrade(String modName) throws UpgradeException {
         IUpgrade targetUpgrade = null;
         for (IUpgrade upgrade : installedUpgrades) {
             if (upgrade.getModName().equals(modName)) {
@@ -95,8 +94,7 @@ public class Car {
             }
         }
         if (targetUpgrade == null) {
-            System.out.println("Колата няма " + modName + " за махане.");
-            return;
+            throw new UpgradeException("Модификация '" + modName + "' не е открита на този автомобил.");
         }
         targetUpgrade.remove(this);
         installedUpgrades.remove(targetUpgrade);

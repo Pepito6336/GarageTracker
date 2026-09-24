@@ -17,10 +17,12 @@ public class Main {
             System.out.println("6. Пълна информация за кола");
             System.out.println("7. Списък на всички клиенти");
             System.out.println("8. Списък на всички автомобили");
-            System.out.println("9. Търсене на Клиенти и Автомобили)");
+            System.out.println("9. Търсене на Клиенти и Автомобили");
             System.out.println("10. Инсталиране на модификация (Турбо/Чип)");
             System.out.println("11. Премахване на модификация (Турбо/Чип)");
-            System.out.println("12. Изход");
+            System.out.println("12. Запазване на промените във файл (Quick Save)");
+            System.out.println("13. ИЗТРИВАНЕ НА ВСИЧКО (Нулиране)");
+            System.out.println("14. Изход");
 
             String choice = InputValidator.readStringLimited(scanner, "Изберете опция: ", 2);
 
@@ -67,9 +69,24 @@ public class Main {
                     manager.removeModification(scanner);
                     break;
                 case "12":
+                    FileManager.saveData(manager.getGarageClients());
+                    break;
+                case "13":
+                    // Вече методът сам си пита, трие и запазва, ако е нужно
+                    manager.clearAllData(scanner);
+                    break;
+
+                case "14":
+                    boolean saveBeforeExit = InputValidator.readConfirmation(scanner, "Искате ли да запазите промените преди изход?");
+
+                    if (saveBeforeExit) {
+                        FileManager.saveData(manager.getGarageClients());
+                    }
+
                     System.out.println("Изход . . .");
                     scanner.close();
                     return;
+
                 default:
                     System.out.println("Невалидна опция.");
             }

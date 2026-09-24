@@ -9,15 +9,52 @@ public class GarageManager {
         this.garageClients = new ArrayList<>();
     }
 
+    public List<Client> getGarageClients() {
+        return garageClients;
+    }
+
+    private Car findCarByPlate(String plate) {
+        for (Client c : garageClients) {
+            for (Car car : c.getOwnedCars()) {
+                if (car.getLicensePlate().equals(plate)) {
+                    return car;
+                }
+            }
+        }
+        return null;
+    }
+
+    private Client findClientByEgn(String egn) {
+        for (Client c : garageClients) {
+            if (c.getEgn().equals(egn)) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+    private boolean shouldSwapCars(Car car1, Car car2) {
+        int brandCheck = car1.getBrand().compareToIgnoreCase(car2.getBrand());
+        if (brandCheck > 0) return true;
+
+        if (brandCheck == 0) {
+            int modelCheck = car1.getModel().compareToIgnoreCase(car2.getModel());
+            if (modelCheck > 0) return true;
+
+            if (modelCheck == 0) {
+                return car1.getYear() > car2.getYear();
+            }
+        }
+        return false;
+    }
+
     public void registerClient(Scanner scanner) throws DuplicateException {
         System.out.println("\n--- ДОБАВЯНЕ НА КЛИЕНТ ---");
         String name = InputValidator.readName(scanner, "Въведете Име и Фамилия: ");
         String inputEgn = InputValidator.readEgn(scanner);
 
-        for (Client c : garageClients) {
-            if (c.getEgn().equals(inputEgn)) {
-                throw new DuplicateException("Клиент с това ЕГН вече съществува.");
-            }
+        if (findClientByEgn(inputEgn) != null) {
+            throw new DuplicateException("Клиент с това ЕГН вече съществува.");
         }
 
         String phone = InputValidator.readPhone(scanner, "Въведете телефон: ");
@@ -37,14 +74,7 @@ public class GarageManager {
         }
 
         String searchEgn = InputValidator.readEgn(scanner);
-
-        Client foundClient = null;
-        for (Client c : garageClients) {
-            if (c.getEgn().equals(searchEgn)) {
-                foundClient = c;
-                break;
-            }
-        }
+        Client foundClient = findClientByEgn(searchEgn);
 
         if (foundClient == null) {
             System.out.println("Няма клиент с такова ЕГН.");
@@ -80,14 +110,7 @@ public class GarageManager {
         }
 
         String searchEgn = InputValidator.readEgn(scanner);
-
-        Client targetClient = null;
-        for (Client c : garageClients) {
-            if (c.getEgn().equals(searchEgn)) {
-                targetClient = c;
-                break;
-            }
-        }
+        Client targetClient = findClientByEgn(searchEgn);
 
         if (targetClient == null) {
             System.out.println("Няма клиент с такова ЕГН.");
@@ -106,22 +129,9 @@ public class GarageManager {
 
     public void removeCar(Scanner scanner) {
         System.out.println("\n--- ИЗТРИВАНЕ НА АВТОМОБИЛ ---");
-
         String plate = InputValidator.readLicensePlate(scanner, "Въведете Рег. номер на колата за изтриване: ");
 
-        Car targetCar = null;
-        Client targetClient = null;
-
-        for (Client c : garageClients) {
-            for (Car car : c.getOwnedCars()) {
-                if (car.getLicensePlate().equals(plate)) {
-                    targetCar = car;
-                    targetClient = c;
-                    break;
-                }
-            }
-            if (targetCar != null) break;
-        }
+        Car targetCar = findCarByPlate(plate);
 
         if (targetCar == null) {
             System.out.println("Кола с такъв регистрационен номер не е открита.");
@@ -129,9 +139,8 @@ public class GarageManager {
         }
 
         boolean confirm = InputValidator.readConfirmation(scanner, "Искате ли да изтриете колата?");
-
         if (confirm) {
-            targetClient.getOwnedCars().remove(targetCar);
+            targetCar.getOwner().getOwnedCars().remove(targetCar);
             System.out.println("Колата беше изтрита успешно.");
         } else {
             System.out.println("Операцията е прекратена.");
@@ -146,16 +155,13 @@ public class GarageManager {
         }
 
         String searchEgn = InputValidator.readEgn(scanner);
+        Client targetClient = findClientByEgn(searchEgn);
 
-        for (Client c : garageClients) {
-            if (c.getEgn().equals(searchEgn)) {
-                // Обектът сам си знае как да си изпринтира данните и колите
-                c.printClientInfo();
-                return;
-            }
+        if (targetClient != null) {
+            targetClient.printClientInfo();
+        } else {
+            System.out.println("Няма клиент с такова ЕГН.");
         }
-
-        System.out.println("Няма клиент с такова ЕГН.");
     }
 
     public void printCarDetails(Scanner scanner) {
@@ -166,18 +172,13 @@ public class GarageManager {
         }
 
         String plate = InputValidator.readLicensePlate(scanner, "Въведете Рег. номер за търсене: ");
+        Car targetCar = findCarByPlate(plate);
 
-        for (Client c : garageClients) {
-            for (Car car : c.getOwnedCars()) {
-                if (car.getLicensePlate().equals(plate)) {
-                    // Колата изкарва пълната си диагностика, като ѝ подаваме собственика
-                    car.printDiagnostics(c);
-                    return;
-                }
-            }
+        if (targetCar != null) {
+            targetCar.printDiagnostics(targetCar.getOwner());
+        } else {
+            System.out.println("Кола с такъв регистрационен номер не е открита.");
         }
-
-        System.out.println("Кола с такъв регистрационен номер не е открита.");
     }
 
     public void printAllClients() {
@@ -225,25 +226,9 @@ public class GarageManager {
 
                 Car car1 = allCars.get(j);
                 Car car2 = allCars.get(j + 1);
-                boolean shouldSwap = false;
 
-                int brandCheck = car1.getBrand().compareToIgnoreCase(car2.getBrand());
-                if (brandCheck > 0) {
-                    shouldSwap = true;
-                }
-                else if (brandCheck == 0) {
-                    int modelCheck = car1.getModel().compareToIgnoreCase(car2.getModel());
-                    if (modelCheck > 0) {
-                        shouldSwap = true;
-                    }
-                    else if (modelCheck == 0) {
-                        if (car1.getYear() > car2.getYear()) {
-                            shouldSwap = true;
-                        }
-                    }
-                }
-
-                if (shouldSwap) {
+                // Тук магията вече е изнесена в помощника!
+                if (shouldSwapCars(car1, car2)) {
                     allCars.set(j, car2);
                     allCars.set(j + 1, car1);
                 }
@@ -317,38 +302,30 @@ public class GarageManager {
         System.out.println("\n--- ИНСТАЛИРАНЕ НА МОДИФИКАЦИЯ ---");
         String plate = InputValidator.readLicensePlate(scanner, "На коя кола ще инсталирате? (Рег. номер): ");
 
-        Car targetCar = null;
-        Client targetClient = null;
-
-        for (Client c : garageClients) {
-            for (Car car : c.getOwnedCars()) {
-                if (car.getLicensePlate().equals(plate)) {
-                    targetCar = car;
-                    targetClient = c;
-                    break;
-                }
-            }
-            if (targetCar != null) break;
-        }
+        Car targetCar = findCarByPlate(plate);
 
         if (targetCar == null) {
             System.out.println("Кола с такъв регистрационен номер не е открита.");
             return;
         }
 
-        targetCar.printDiagnostics(targetClient);
+        targetCar.printDiagnostics(targetCar.getOwner());
 
         System.out.println("\nКакво искате да инсталирате?");
         System.out.println("1. Турбо");
         System.out.println("2. Чип");
         String choice = InputValidator.readStringLimited(scanner, "Изберете (1 или 2): ", 1);
 
-        if (choice.equals("1")) {
-            targetCar.applyUpgrade(new Turbo(false));
-        } else if (choice.equals("2")) {
-            targetCar.applyUpgrade(new Chip(false));
-        } else {
-            System.out.println("Невалиден избор. Операцията е прекратена.");
+        try {
+            if (choice.equals("1")) {
+                targetCar.applyUpgrade(new Turbo(false));
+            } else if (choice.equals("2")) {
+                targetCar.applyUpgrade(new Chip(false));
+            } else {
+                System.out.println("Невалиден избор. Операцията е прекратена.");
+            }
+        } catch (UpgradeException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -356,38 +333,49 @@ public class GarageManager {
         System.out.println("\n--- ПРЕМАХВАНЕ НА МОДИФИКАЦИЯ ---");
         String plate = InputValidator.readLicensePlate(scanner, "От коя кола ще премахвате? (Рег. номер): ");
 
-        Car targetCar = null;
-        Client targetClient = null;
-
-        for (Client c : garageClients) {
-            for (Car car : c.getOwnedCars()) {
-                if (car.getLicensePlate().equals(plate)) {
-                    targetCar = car;
-                    targetClient = c;
-                    break;
-                }
-            }
-            if (targetCar != null) break;
-        }
+        Car targetCar = findCarByPlate(plate);
 
         if (targetCar == null) {
             System.out.println("Кола с такъв регистрационен номер не е открита.");
             return;
         }
 
-        targetCar.printDiagnostics(targetClient);
+        targetCar.printDiagnostics(targetCar.getOwner());
 
         System.out.println("\nКакво искате да премахнете?");
         System.out.println("1. Турбо");
         System.out.println("2. Чип");
         String choice = InputValidator.readStringLimited(scanner, "Изберете (1 или 2): ", 1);
 
-        if (choice.equals("1")) {
-            targetCar.removeUpgrade("Турбо");
-        } else if (choice.equals("2")) {
-            targetCar.removeUpgrade("Чип");
+        try {
+            if (choice.equals("1")) {
+                targetCar.removeUpgrade("Турбо");
+            } else if (choice.equals("2")) {
+                targetCar.removeUpgrade("Чип");
+            } else {
+                System.out.println("Невалиден избор. Операцията е прекратена.");
+            }
+        } catch (UpgradeException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void clearAllData(Scanner scanner) {
+        System.out.println("\n--- НУЛИРАНЕ НА СИСТЕМАТА ---");
+        if (garageClients.isEmpty()) {
+            System.out.println("Гаражът вече е празен.");
+            return;
+        }
+
+        boolean confirm = InputValidator.readConfirmation(scanner, "ВНИМАНИЕ: Това ще изтрие ВСИЧКИ клиенти и автомобили! Сигурни ли сте?");
+
+        if (confirm) {
+            garageClients.clear();
+            System.out.println("Гаражът е напълно изчистен в паметта.");
+
+            FileManager.saveData(garageClients);
         } else {
-            System.out.println("Невалиден избор. Операцията е прекратена.");
+            System.out.println("Операцията е прекратена.");
         }
     }
 }
