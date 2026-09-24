@@ -135,4 +135,19 @@ public class InputValidator {
             System.out.println("Невалидни конски сили.");
         }
     }
+
+    public static boolean readConfirmation(Scanner scanner, String prompt) {
+        while (true) {
+            System.out.print(prompt + " (Y/N): ");
+            String input = scanner.nextLine().trim().toUpperCase();
+
+            if (input.equals("Y")) {
+                return true;
+            } else if (input.equals("N")) {
+                return false;
+            }
+
+            System.out.println("Невалиден отговор. Моля, въведете точно Y или N.");
+        }
+    }
 }
