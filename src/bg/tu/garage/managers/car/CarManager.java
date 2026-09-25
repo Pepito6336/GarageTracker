@@ -19,11 +19,12 @@ public class CarManager implements ICarManager {
 
     @Override
     public void registerCar(Scanner scanner) throws DuplicateException {
-        System.out.println("\n--- ДОБАВЯНЕ НА КОЛА ---");
+        System.out.println("\n--- ДОБАВЯНЕ НА КОЛА ---\n");
         if (db.getClients().isEmpty()) {
             System.out.println("Гаражът е празен. Първо добавете клиент.");
             return;
         }
+        System.out.println("(Въведете 0 за Главно Меню)\n");
 
         String searchEgn = InputValidator.readEgn(scanner);
         try {
@@ -53,7 +54,13 @@ public class CarManager implements ICarManager {
 
     @Override
     public void removeCar(Scanner scanner) {
-        System.out.println("\n--- ИЗТРИВАНЕ НА АВТОМОБИЛ ---");
+        System.out.println("\n--- ИЗТРИВАНЕ НА АВТОМОБИЛ ---\n");
+        if (!db.hasAnyCars()) {
+            System.out.println("В системата няма нито един регистриран автомобил.");
+            return;
+        }
+        System.out.println("(Въведете 0 за Главно Меню)\n");
+
         String plate = InputValidator.readLicensePlate(scanner, "Въведете Рег. номер на колата за изтриване: ");
 
         try {
@@ -73,7 +80,13 @@ public class CarManager implements ICarManager {
 
     @Override
     public void printCarDetails(Scanner scanner) {
-        System.out.println("\n--- ПЪЛНА ИНФОРМАЦИЯ ЗА КОЛА ---");
+        System.out.println("\n--- ПЪЛНА ИНФОРМАЦИЯ ЗА КОЛА ---\n");
+        if (!db.hasAnyCars()) {
+            System.out.println("В системата няма нито един регистриран автомобил.");
+            return;
+        }
+        System.out.println("(Въведете 0 за Главно Меню)\n");
+
         String plate = InputValidator.readLicensePlate(scanner, "Въведете Рег. номер за търсене: ");
         try {
             Car targetCar = db.findCarByPlate(plate);

@@ -17,7 +17,13 @@ public class SearchEngine implements ISearchEngine {
 
     @Override
     public void search(Scanner scanner) {
-        System.out.println("\n--- ТЪРСАЧКА ---");
+        System.out.println("\n--- ТЪРСАЧКА ---\n");
+        if (db.getClients().isEmpty()) {
+            System.out.println("Гаражът е напълно празен. Няма какво да търсите.");
+            return;
+        }
+        System.out.println("(Въведете 0 за Главно Меню)\n");
+
         System.out.println("1. Търсене в Клиенти");
         System.out.println("2. Търсене в Автомобили");
         String choice = InputValidator.readStringLimited(scanner, "Изберете (1 или 2): ", 1);
@@ -33,7 +39,7 @@ public class SearchEngine implements ISearchEngine {
         boolean foundAnything = false;
 
         if (choice.equals("1")) {
-            System.out.println("\n--- РЕЗУЛТАТИ: КЛИЕНТИ ---");
+            System.out.println("\n--- РЕЗУЛТАТИ: КЛИЕНТИ ---\n");
             for (Client c : db.getClients()) {
                 String name = c.getFullName().toLowerCase();
                 String egn = c.getEgn().toLowerCase();
@@ -45,7 +51,7 @@ public class SearchEngine implements ISearchEngine {
                 }
             }
         } else if (choice.equals("2")) {
-            System.out.println("\n--- РЕЗУЛТАТИ: АВТОМОБИЛИ ---");
+            System.out.println("\n--- РЕЗУЛТАТИ: АВТОМОБИЛИ ---\n");
             for (Client c : db.getClients()) {
                 for (Car car : c.getOwnedCars()) {
                     String brand = car.getBrand().toLowerCase();

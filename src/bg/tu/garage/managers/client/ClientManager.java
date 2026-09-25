@@ -17,7 +17,8 @@ public class ClientManager implements IClientManager {
 
     @Override
     public void registerClient(Scanner scanner) throws DuplicateException {
-        System.out.println("\n--- ДОБАВЯНЕ НА КЛИЕНТ ---");
+        System.out.println("\n--- ДОБАВЯНЕ НА КЛИЕНТ ---\n");
+        System.out.println("(Въведете 0 за Главно Меню)\n");
         String name = InputValidator.readName(scanner, "Въведете Име и Фамилия: ");
         String inputEgn = InputValidator.readEgn(scanner);
 
@@ -37,11 +38,12 @@ public class ClientManager implements IClientManager {
 
     @Override
     public void removeClient(Scanner scanner) {
-        System.out.println("\n--- ИЗТРИВАНЕ НА КЛИЕНТ ---");
+        System.out.println("\n--- ИЗТРИВАНЕ НА КЛИЕНТ ---\n");
         if (db.getClients().isEmpty()) {
             System.out.println("Гаражът е празен. Няма клиенти за изтриване.");
             return;
         }
+        System.out.println("(Въведете 0 за Главно Меню)\n");
 
         String searchEgn = InputValidator.readEgn(scanner);
         try {
@@ -61,7 +63,13 @@ public class ClientManager implements IClientManager {
 
     @Override
     public void printClientDetails(Scanner scanner) {
-        System.out.println("\n--- ПЪЛНА ИНФОРМАЦИЯ ЗА КЛИЕНТ ---");
+        System.out.println("\n--- ПЪЛНА ИНФОРМАЦИЯ ЗА КЛИЕНТ ---\n");
+        if (db.getClients().isEmpty()) {
+            System.out.println("Гаражът е празен. Няма регистрирани клиенти.");
+            return;
+        }
+        System.out.println("(Въведете 0 за Главно Меню)\n");
+
         String searchEgn = InputValidator.readEgn(scanner);
         try {
             Client targetClient = db.findClientByEgn(searchEgn);

@@ -31,7 +31,10 @@ public class ReportManager implements IReportManager {
 
     @Override
     public void printAllClients() {
-        System.out.println("\n--- СПИСЪК С КЛИЕНТИ ---");
+        System.out.println("\n========================================");
+        System.out.println("              GARAGE TRACKER");
+        System.out.println("========================================\n");
+        System.out.println("\n--- СПИСЪК С КЛИЕНТИ ---\n");
         if (db.getClients().isEmpty()) {
             System.out.println("Няма регистрирани клиенти.");
             return;
@@ -58,7 +61,10 @@ public class ReportManager implements IReportManager {
 
     @Override
     public void printAllCars() {
-        System.out.println("\n--- СПИСЪК С АВТОМОБИЛИ ---");
+        System.out.println("\n========================================");
+        System.out.println("              GARAGE TRACKER");
+        System.out.println("========================================\n");
+        System.out.println("\n--- СПИСЪК С АВТОМОБИЛИ ---\n");
         List<Car> allCars = new ArrayList<>();
         for (Client c : db.getClients()) {
             allCars.addAll(c.getOwnedCars());

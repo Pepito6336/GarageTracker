@@ -18,6 +18,15 @@ public class GarageDatabase {
         return clients;
     }
 
+    public boolean hasAnyCars() {
+        for (Client c : clients) {
+            if (!c.getOwnedCars().isEmpty()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Car findCarByPlate(String plate) throws EntityNotFoundException {
         for (Client c : clients) {
             for (Car car : c.getOwnedCars()) {

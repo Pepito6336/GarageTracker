@@ -19,7 +19,13 @@ public class UpgradeManager implements IUpgradeManager {
 
     @Override
     public void installModification(Scanner scanner) {
-        System.out.println("\n--- ИНСТАЛИРАНЕ НА МОДИФИКАЦИЯ ---");
+        System.out.println("\n--- ИНСТАЛИРАНЕ НА МОДИФИКАЦИЯ ---\n");
+        if (!db.hasAnyCars()) {
+            System.out.println("Няма регистрирани автомобили, на които да сложите модификация.");
+            return;
+        }
+        System.out.println("(Въведете 0 за Главно Меню)\n");
+
         String plate = InputValidator.readLicensePlate(scanner, "На коя кола ще инсталирате? (Рег. номер): ");
 
         try {
@@ -49,7 +55,13 @@ public class UpgradeManager implements IUpgradeManager {
 
     @Override
     public void removeModification(Scanner scanner) {
-        System.out.println("\n--- ПРЕМАХВАНЕ НА МОДИФИКАЦИЯ ---");
+        System.out.println("\n--- ПРЕМАХВАНЕ НА МОДИФИКАЦИЯ ---\n");
+        if (!db.hasAnyCars()) {
+            System.out.println("Няма регистрирани автомобили в системата.");
+            return;
+        }
+        System.out.println("(Въведете 0 за Главно Меню)\n");
+
         String plate = InputValidator.readLicensePlate(scanner, "От коя кола ще премахвате? (Рег. номер): ");
 
         try {

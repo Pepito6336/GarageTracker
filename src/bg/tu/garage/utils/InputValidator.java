@@ -1,15 +1,22 @@
 package bg.tu.garage.utils;
 
+import java.util.Scanner;
+import bg.tu.garage.exceptions.CancelOperationException;
 import bg.tu.garage.entities.Transmission;
 
-import java.util.Scanner;
-
 public class InputValidator {
+
+    private static void checkForExit(String input) {
+        if (input.equals("0")) {
+            throw new CancelOperationException();
+        }
+    }
 
     public static String readName(Scanner scanner, String prompt) {
         while (true) {
             System.out.print(prompt);
             String input = scanner.nextLine().trim();
+            checkForExit(input);
             if (input.length() <= 50 && input.matches("^[\\p{L}\\-]+ [\\p{L}\\-]+$")) {
                 return input;
             }
@@ -21,6 +28,7 @@ public class InputValidator {
         while (true) {
             System.out.print("Въведете ЕГН: ");
             String input = scanner.nextLine().trim();
+            checkForExit(input);
             if (input.matches("^\\d{10}$")) {
                 return input;
             }
@@ -32,7 +40,8 @@ public class InputValidator {
         while (true) {
             System.out.print(prompt);
             String input = scanner.nextLine().trim();
-            if (input.length() <= 15 && input.matches("^\\+?\\d+$")) {
+            checkForExit(input);
+            if (input.length() <= 15 && input.length() >=10 && input.matches("^\\+?\\d+$")) {
                 return input;
             }
             System.out.println("Невалиден телефон.");
@@ -43,6 +52,7 @@ public class InputValidator {
         while (true) {
             System.out.print(prompt);
             String input = scanner.nextLine().trim();
+            checkForExit(input);
             if (input.length() <= 30 && !input.contains(" ") && input.contains("@")) {
                 return input;
             }
@@ -54,6 +64,7 @@ public class InputValidator {
         while (true) {
             System.out.print(prompt);
             String input = scanner.nextLine().trim();
+            checkForExit(input);
             if (!input.isEmpty() && input.length() <= 100) {
                 return input;
             }
@@ -65,6 +76,7 @@ public class InputValidator {
         while (true) {
             System.out.print(prompt);
             String input = scanner.nextLine().trim();
+            checkForExit(input);
             if (!input.isEmpty() && input.length() <= maxLength) {
                 return input;
             }
@@ -76,6 +88,7 @@ public class InputValidator {
         while (true) {
             System.out.print(prompt);
             String input = scanner.nextLine().trim();
+            checkForExit(input);
             if (input.matches("^\\d{4}$")) {
                 try {
                     int year = Integer.parseInt(input);
@@ -91,13 +104,11 @@ public class InputValidator {
     public static String readLicensePlate(Scanner scanner, String prompt) {
         while (true) {
             System.out.print(prompt);
-
             String input = scanner.nextLine().replaceAll("\\s+", "").toUpperCase();
-
+            checkForExit(input);
             if (!input.isEmpty() && input.length() <= 8) {
                 return input;
             }
-
             System.out.println("Невалиден номер.");
         }
     }
@@ -106,6 +117,7 @@ public class InputValidator {
         while (true) {
             System.out.print(prompt);
             String input = scanner.nextLine().trim();
+            checkForExit(input);
             if (input.matches("^\\d+(\\.\\d)?$")) {
                 try {
                     return Double.parseDouble(input);
@@ -122,6 +134,7 @@ public class InputValidator {
             System.out.println("2. Автоматична");
             System.out.print("Изберете (1 или 2): ");
             String input = scanner.nextLine().trim();
+            checkForExit(input);
             if (input.equals("1")) return Transmission.MANUAL;
             if (input.equals("2")) return Transmission.AUTOMATIC;
             else System.out.println("Невалиден избор.");
@@ -132,6 +145,7 @@ public class InputValidator {
         while (true) {
             System.out.print(prompt);
             String input = scanner.nextLine().trim();
+            checkForExit(input);
             try {
                 int hp = Integer.parseInt(input);
                 if (hp > 0) return hp;
@@ -144,13 +158,9 @@ public class InputValidator {
         while (true) {
             System.out.print(prompt + " (Y/N): ");
             String input = scanner.nextLine().trim().toUpperCase();
-
-            if (input.equals("Y")) {
-                return true;
-            } else if (input.equals("N")) {
-                return false;
-            }
-
+            checkForExit(input);
+            if (input.equals("Y")) return true;
+            else if (input.equals("N")) return false;
             System.out.println("Невалиден отговор. Моля, въведете точно Y или N.");
         }
     }

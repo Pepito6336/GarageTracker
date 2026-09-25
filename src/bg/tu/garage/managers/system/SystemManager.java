@@ -20,7 +20,10 @@ public class SystemManager implements ISystemManager {
 
     @Override
     public void clearAllData(Scanner scanner) {
-        System.out.println("\n--- НУЛИРАНЕ НА СИСТЕМАТА ---");
+        System.out.println("\n========================================");
+        System.out.println("              GARAGE TRACKER");
+        System.out.println("========================================\n");
+        System.out.println("\n--- НУЛИРАНЕ НА СИСТЕМАТА ---\n");
         if (db.getClients().isEmpty()) {
             System.out.println("Гаражът вече е празен.");
             return;
