@@ -1,0 +1,11 @@
+CLIENT;Иван Иванов;9811300609;0896563827;ivan_ivanov@gmail.com;гр. Варна, ул. "Пирин" 17
+CAR;BMW;M5;2006;B2362XB;2.0;MANUAL;168.0
+MOD;Турбо
+CLIENT;Петър Симеонов;0242041022;0835293321;petar_sime0nov@mail.bg;гр. Варна, ул. "Oборище" 15
+CAR;Toyota;Yaris;1999;BT746TA;1.2;MANUAL;70.0
+CAR;Toyota;CHR;2018;B8961HA;1.8;AUTOMATIC;120.0
+CLIENT;Симеон Стойнов;9510109087;0887326209;simo100inov@gmail.com;гр. София, Младост 45
+CAR;Honda;Civic;2001;CB2921XA;1.4;MANUAL;120.0
+MOD;Турбо
+MOD;Чип
+CAR;Mercedes;C63;2007;CA5675HK;2.0;AUTOMATIC;110.0

@@ -42,8 +42,10 @@ public class FileManager {
         }
     }
 
+    // НОВ МЕТОД: Безшумно нулиране на файла (без неизползвани променливи)
     public static void clearData() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
+        try {
+            new FileWriter(FILE_PATH).close(); // Отваря и затваря мигновено, което зачиства файла
         } catch (IOException e) {
             System.out.println("Грешка при изчистване на файла: " + e.getMessage());
         }
