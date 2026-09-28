@@ -50,7 +50,7 @@ public class Car {
 
     public void applyUpgrade(IUpgrade upgrade) throws UpgradeException {
         if (hasUpgrade(upgrade.getModName())) {
-            throw new UpgradeException("Колата вече разполага с модификация '" + upgrade.getModName() + "'.");
+            throw new UpgradeException("Колата вече разполага с " + upgrade.getModName() + ".");
         }
         upgrade.install(this);
         installedUpgrades.add(upgrade);
