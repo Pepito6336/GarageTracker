@@ -42,6 +42,13 @@ public class FileManager {
         }
     }
 
+    public static void clearData() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
+        } catch (IOException e) {
+            System.out.println("Грешка при изчистване на файла: " + e.getMessage());
+        }
+    }
+
     public static List<Client> loadData() {
         List<Client> clients = new ArrayList<>();
         File file = new File(FILE_PATH);

@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Client {
     private String fullName;
-    private final String egn; // Вече никой не може да го промени по погрешка
+    private final String egn;
     private String phoneNumber;
     private String eMail;
     private String address;
@@ -30,7 +30,6 @@ public class Client {
     public void addCar(Car car) {
         car.setOwner(this);
         ownedCars.add(car);
-        System.out.println("Колата на " + fullName + " е добавена в списъка.");
     }
 
     public void printClientBasics(){
@@ -44,9 +43,13 @@ public class Client {
         System.out.println("И-Мейл: " + eMail);
         System.out.println("Адрес: " + address);
         System.out.println("Притежавани коли: ");
-        for (Car car : ownedCars){
-            car.printCarInfo();
+
+        if (ownedCars.isEmpty()) {
+            System.out.println("  -> Няма регистрирани автомобили.");
+        } else {
+            for (Car car : ownedCars){
+                car.printCarInfoWithoutOwner();
+            }
         }
-        System.out.println("------------------");
     }
 }

@@ -72,7 +72,11 @@ public class Car {
     }
 
     public void printCarInfo() {
-        System.out.println(brand + ", " + model + ", рег. номер: " + licensePlate + ", Собственик:" + getOwner().getFullName());
+        System.out.println(brand + ", " + model + ", рег. номер: " + licensePlate + ", Собственик: " + getOwner().getFullName());
+    }
+
+    public void printCarInfoWithoutOwner() {
+        System.out.println("  -> " + brand + " " + model + " (Рег. номер: " + licensePlate + ")");
     }
 
     public void printDiagnostics(Client client) {
@@ -93,6 +97,5 @@ public class Car {
             }
         }
         System.out.println("Собственик: " + client.getFullName());
-        System.out.println("------------------");
     }
 }

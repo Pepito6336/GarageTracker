@@ -1,5 +1,6 @@
 package bg.tu.garage;
 
+import bg.tu.garage.entities.Client;
 import bg.tu.garage.exceptions.CancelOperationException;
 import bg.tu.garage.exceptions.DuplicateException;
 import bg.tu.garage.managers.car.CarManager;
@@ -32,7 +33,11 @@ public class Main {
         ISystemManager systemManager = new SystemManager(db);
 
         if (!db.getClients().isEmpty()) {
-            System.out.println("Успешно зареден гараж с " + db.getClients().size() + " клиенти.");
+            int totalCars = 0;
+            for (Client c : db.getClients()) {
+                totalCars += c.getOwnedCars().size();
+            }
+            System.out.println("Успешно зареден гараж с " + db.getClients().size() + " клиенти и " + totalCars + " автомобили.");
         }
 
         while (true) {

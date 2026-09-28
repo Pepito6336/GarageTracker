@@ -20,10 +20,7 @@ public class SystemManager implements ISystemManager {
 
     @Override
     public void clearAllData(Scanner scanner) {
-        System.out.println("\n========================================");
-        System.out.println("              GARAGE TRACKER");
-        System.out.println("========================================\n");
-        System.out.println("\n--- НУЛИРАНЕ НА СИСТЕМАТА ---\n");
+        System.out.println("\n--- НУЛИРАНЕ НА СИСТЕМАТА ---");
         if (db.getClients().isEmpty()) {
             System.out.println("Гаражът вече е празен.");
             return;
@@ -33,8 +30,8 @@ public class SystemManager implements ISystemManager {
 
         if (confirm) {
             db.clearAll();
-            System.out.println("Гаражът е напълно изчистен в паметта.");
-            FileManager.saveData(db.getClients());
+            FileManager.clearData();
+            System.out.println("Гаражът е напълно изчистен.");
         } else {
             System.out.println("Операцията е прекратена.");
         }
